@@ -1,3 +1,6 @@
+// Go GC机制深度验证实验
+// Author: wujiachen | Created: 2025-09-19
+// 基于真实环境的GC性能测试和分析
 package main
 
 import (
