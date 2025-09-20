@@ -1,31 +1,62 @@
-# Go GC 实验验证项目
+# Go GC 实验代码
 
-通过实际测试验证Go语言垃圾回收机制的性能表现。
+这是配合博客文章《Go GC机制深度解析：从标记清除到三色标记》的实验代码。
 
 ## 快速开始
 
 ```bash
-# 运行所有实验
-./run_experiments.sh
+# 直接跑实验
+go run main.go basic
 
-# 或者手动运行
-go run main.go
-go test -bench=. -benchmem
+# 或者用脚本（方便截图）
+chmod +x run_experiments.sh
+./run_experiments.sh basic
 ```
 
-## 实验内容
+## 实验列表
 
-1. **基础GC行为** - 观察GC触发时机和暂停时间
-2. **GOGC参数测试** - 对比不同GOGC值的性能影响  
-3. **对象池对比** - 验证对象池vs频繁分配的效果
-4. **分配模式分析** - 测试不同内存分配模式的GC影响
-5. **并发GC测试** - 多goroutine场景下的GC表现
+| 命令 | 说明 | 对应文章章节 |
+|------|------|-------------|
+| `basic` | 基础GC行为观察 | 实际测试：基础GC行为观察 |
+| `gogc` | GOGC参数对比 | GOGC参数的实际影响 |
+| `pool` | 对象池效果验证 | 对象池的效果验证 |
+| `alloc` | 内存分配模式对比 | 内存分配模式对比 |
+| `concurrent` | 并发场景GC测试 | 并发场景下的GC表现 |
+| `leak` | Goroutine泄漏检测 | goroutine泄漏检测 |
+| `slice` | 切片容量泄漏检测 | 切片容量泄漏检测 |
+| `monitor` | GC性能监控 | 实时GC监控 |
 
-## 查看结果
+## 使用脚本
 
-实验运行后会输出详细的性能数据，包括：
-- GC次数和暂停时间
-- 内存使用情况
-- 性能对比数据
+脚本会自动保存日志和提醒截图：
 
-所有数据都可以直接用于博客文章和性能分析。
+```bash
+# 跑单个实验
+./run_experiments.sh basic
+
+# 跑所有实验（适合连续截图）
+./run_experiments.sh all
+```
+
+## 文件说明
+
+- `main.go` - 主要实验代码
+- `run_experiments.sh` - 实验脚本，方便截图
+- `results/` - 实验日志保存目录
+
+## 环境要求
+
+- Go 1.18+
+- 建议在Linux/macOS下运行
+- 终端窗口调整到合适大小以便截图
+
+## 注意事项
+
+1. 实验会分配大量内存，请确保系统内存充足
+2. 某些实验（如leak）会故意创建泄漏，属于正常现象
+3. 不同机器的结果可能有差异，这很正常
+
+## 相关链接
+
+- 博客文章：[Go GC机制深度解析](https://wujiachen0727.github.io/posts/go-gc机制深度解析从标记清除到三色标记/)
+- 作者博客：https://wujiachen0727.github.io/
